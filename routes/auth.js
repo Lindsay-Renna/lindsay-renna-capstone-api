@@ -15,7 +15,7 @@ router.get(
 		failureRedirect: `${process.env.CLIENT_URL}/auth-fail`,
 	}),
 	(_req, res) => {
-		res.redirect(process.env.CLIENT_URL);
+		res.redirect(process.env.CLIENT_URL + "/profile");
 	}
 );
 
@@ -28,7 +28,7 @@ router.get(
 	}),
 	(req, res) => {
 		// Successful authentication
-		res.redirect(process.env.CLIENT_URL);
+		res.redirect(process.env.CLIENT_URL + "/profile");
 	}
 );
 

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
 	try {
-		const boardgames = await knexBG("bgg").select("*").limit(10);
+		const boardgames = await knexBG("bgg").select("*").limit(40);
 		boardgames.forEach((game) => {
 			const image = JSON.parse(unescape(game.image_urls));
 			const video = JSON.parse(unescape(game.video_urls));

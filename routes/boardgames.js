@@ -40,6 +40,7 @@ router.post("/results", async (req, res) => {
 			.andWhere("max_players", ">=", num_players)
 			.andWhere("min_time", "<=", max_time)
 			.andWhere("min_age", "<=", min_age)
+			.andWhere("year", ">", 2015)
 			.andWhere("category", "like", `%${category}%`)
 			.limit(100);
 

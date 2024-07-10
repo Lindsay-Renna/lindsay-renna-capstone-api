@@ -4,6 +4,7 @@ import cors from "cors";
 import "dotenv/config";
 import dotenv from "dotenv";
 import boardgameRoutes from "./routes/boardgames.js";
+import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import helmet from "helmet";
 
@@ -15,8 +16,7 @@ const GitHubStrategy = passportGitHub.Strategy;
 const GoogleStrategy = passportGoogle.Strategy;
 
 // Knex instance
-import Knex from "knex";
-import { knexBG, knexUser } from "./knexfile.js";
+import { knexUser } from "./knexfile.js";
 
 // Import .env files for environment variables (keys and secrets)
 
@@ -162,6 +162,7 @@ passport.deserializeUser((userId, done) => {
 
 //   Routes
 app.use("/boardgames", boardgameRoutes);
+app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 8080;

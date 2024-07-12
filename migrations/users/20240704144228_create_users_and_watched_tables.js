@@ -13,6 +13,7 @@ export const up = function (knex) {
 			table.integer("user_id").unsigned().notNullable();
 			table.integer("movie_id").notNullable();
 			table.string("movie_name", 250).notNullable();
+			table.integer("movie_year").notNullable();
 			table.timestamp("updated_at").defaultTo(knex.fn.now());
 			table
 				.foreign("user_id")

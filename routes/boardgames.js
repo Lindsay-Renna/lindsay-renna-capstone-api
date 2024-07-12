@@ -64,6 +64,37 @@ router.post("/results", async (req, res) => {
 	}
 });
 
+// GET popular boardgames
+
+router.post("/popular", async (req, res) => {
+	try {
+		const boardgames = await knexBG("bgg")
+			.select("*")
+			.where("year", ">", 2018)
+			.andWhere("min_age", "<", 15)
+			.andWhere("category", "like", `%1041%`)
+			.limit(100);
+
+		boardgames.forEach((game) => {
+			const image = JSON.parse(unescape(game.image_urls));
+			const video = JSON.parse(unescape(game.video_urls));
+			const mechanics = JSON.parse(unescape(game.mechanics));
+			const category = JSON.parse(unescape(game.category));
+			game.image_urls = image;
+			game.video_urls = video;
+			game.mechanics = mechanics;
+			game.category = category;
+		});
+
+		res.status(200).json(boardgames);
+	} catch (error) {
+		console.error(error);
+		res
+			.status(500)
+			.json({ error_code: 500, error_msg: "Failed to GET boardgame list." });
+	}
+});
+
 // GET boardgame details by id
 
 router.get("/:id", async (req, res) => {

@@ -21,9 +21,9 @@ router.get("/:userId/watched-list", async (req, res) => {
 });
 
 router.post("/watched-list/add", async (req, res) => {
-	const { user_id, movie_id, movie_name } = req.body;
+	const { user_id, movie_id, movie_name, movie_year } = req.body;
 
-	if (!user_id || !movie_id || !movie_name) {
+	if (!user_id || !movie_id || !movie_name || !movie_year) {
 		return res.status(400).json({ error: "Missing required fields" });
 	}
 
@@ -32,6 +32,7 @@ router.post("/watched-list/add", async (req, res) => {
 			user_id,
 			movie_id,
 			movie_name,
+			movie_year,
 			updated_at: new Date(),
 		});
 

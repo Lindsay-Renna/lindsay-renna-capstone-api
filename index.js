@@ -156,8 +156,8 @@ app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 8080;
 
-app.get("/healthcheck", (req, res) => {
-	res.send("Server is healthy");
+app.get("/", (req, res) => {
+	res.send("Welcome to the FamTivity API");
 });
 
 app.listen(PORT, () => {

@@ -66,7 +66,7 @@ router.post("/results", async (req, res) => {
 
 // GET popular boardgames
 
-router.post("/popular", async (req, res) => {
+router.get("/popular", async (req, res) => {
 	try {
 		const boardgames = await knexBG("bgg")
 			.select("*")

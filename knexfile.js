@@ -1,7 +1,7 @@
 import "dotenv/config";
-import Knex from "knex";
+import knex from "knex";
 
-export default {
+const db = knex({
 	client: "mysql2",
 	connection: {
 		host: process.env.DB_HOST,
@@ -13,4 +13,6 @@ export default {
 	migrations: {
 		directory: "./migrations",
 	},
-};
+});
+
+export default db;

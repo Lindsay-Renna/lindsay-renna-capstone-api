@@ -1,4 +1,4 @@
-import { knexUser } from "../knexfile.js";
+import knex from "../knexfile.js";
 import express from "express";
 const router = express.Router();
 
@@ -7,7 +7,7 @@ router.use(express.json());
 router.get("/:userId/watched-list", async (req, res) => {
 	try {
 		const { userId } = req.params;
-		const watchedList = await knexUser("watched")
+		const watchedList = await knex("watched")
 			.select("*")
 			.where({ user_id: userId });
 		res.status(200).json(watchedList);
@@ -28,7 +28,7 @@ router.post("/watched-list/add", async (req, res) => {
 	}
 
 	try {
-		const [id] = await knexUser("watched").insert({
+		const [id] = await knex("watched").insert({
 			user_id,
 			movie_id,
 			movie_name,
@@ -51,7 +51,7 @@ router.delete("/:movieId", async (req, res) => {
 	}
 
 	try {
-		await knexUser("watched").delete().where({ id: movieId });
+		await knex("watched").delete().where({ id: movieId });
 
 		res.status(204).json("Movie removed from watched list");
 	} catch (error) {

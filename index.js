@@ -15,7 +15,7 @@ import passportGoogle from "passport-google-oauth20";
 const GitHubStrategy = passportGitHub.Strategy;
 const GoogleStrategy = passportGoogle.Strategy;
 
-import { knexUser } from "./knexfile.js";
+import knex from "./knexfile.js";
 
 dotenv.config();
 
@@ -58,7 +58,7 @@ passport.use(
 			console.log("GitHub profile:", profile);
 
 			// Check for user in DB
-			knexUser("users")
+			knex("users")
 				.select("id")
 				.where({ github_id: profile.id })
 				.then((user) => {
@@ -67,7 +67,7 @@ passport.use(
 						done(null, user[0]);
 					} else {
 						// If user isn't found, create a record
-						knexUser("users")
+						knex("users")
 							.insert({
 								github_id: profile.id,
 								google_id: null,
@@ -99,14 +99,14 @@ passport.use(
 			callbackURL: process.env.GOOGLE_CALLBACK_URL,
 		},
 		(_accessToken, _refreshToken, profile, done) => {
-			knexUser("users")
+			knex("users")
 				.select("id")
 				.where({ google_id: profile.id })
 				.then((user) => {
 					if (user.length) {
 						done(null, user[0]);
 					} else {
-						knexUser("users")
+						knex("users")
 							.insert({
 								google_id: profile.id,
 								github_id: null,
@@ -138,7 +138,7 @@ passport.deserializeUser((userId, done) => {
 	console.log("deserializeUser (user id):", userId);
 
 	// Query user information from the database for currently authenticated user
-	knexUser("users")
+	knex("users")
 		.where({ id: userId })
 		.then((user) => {
 			console.log("req.user:", user[0]);

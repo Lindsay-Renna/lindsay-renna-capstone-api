@@ -7,7 +7,7 @@
 	"scripts": {
 		"start": "node index.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"migrate": "npx knex migrate:latest --env=userDB --knexfile=knexfile.js",
+		"migrate": "npx knex migrate:latest",
 		"dev": "nodemon index"
 	},
 	"author": "",

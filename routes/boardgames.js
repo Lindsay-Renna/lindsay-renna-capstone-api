@@ -1,4 +1,4 @@
-import { knexBG } from "../knexfile.js";
+import knex from "../knexfile.js";
 import express from "express";
 const router = express.Router();
 router.use(express.json());
@@ -7,7 +7,7 @@ router.use(express.json());
 
 router.get("/", async (req, res) => {
 	try {
-		const boardgames = await knexBG("bgg").select("*").limit(40);
+		const boardgames = await knex("bgg").select("*").limit(40);
 		boardgames.forEach((game) => {
 			const image = JSON.parse(unescape(game.image_urls));
 			const video = JSON.parse(unescape(game.video_urls));
@@ -34,7 +34,7 @@ router.post("/results", async (req, res) => {
 	try {
 		const { num_players, min_age, max_time, category } = req.body;
 
-		const boardgames = await knexBG("bgg")
+		const boardgames = await knex("bgg")
 			.select("*")
 			.where("min_players", "<=", num_players)
 			.andWhere("max_players", ">=", num_players)
@@ -68,7 +68,7 @@ router.post("/results", async (req, res) => {
 
 router.get("/popular", async (req, res) => {
 	try {
-		const boardgames = await knexBG("bgg")
+		const boardgames = await knex("bgg")
 			.select("*")
 			.where("year", ">", 2018)
 			.andWhere("min_age", "<", 15)
@@ -100,7 +100,7 @@ router.get("/popular", async (req, res) => {
 router.get("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
-		const boardgame = await knexBG("bgg").where({ bgg_id: id }).first();
+		const boardgame = await knex("bgg").where({ bgg_id: id }).first();
 
 		if (!boardgame) {
 			return res

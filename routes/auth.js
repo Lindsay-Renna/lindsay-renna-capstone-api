@@ -33,9 +33,6 @@ router.get(
 
 // User profile endpoint that requires authentication
 router.get("/profile", (req, res) => {
-	// Passport stores authenticated user information on `req.user` object.
-	// Comes from done function of `deserializeUser`
-
 	// If `req.user` isn't found send back a 401 Unauthorized response
 	if (req.user === undefined)
 		return res.status(401).json({ message: "Unauthorized" });

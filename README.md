@@ -79,7 +79,7 @@
 
 ## About The Project
 
-This app is deisgned for:
+This app is designed for:
 
 - Families with children of various ages seeking to enhance their quality time together.
 - Parents looking for easy and convenient ways to plan engaging activities.

@@ -198,33 +198,24 @@ mysql -u your_database_user -p your_database_name < path/to/your/sql/file.sql
 2. Configure Knex: Create a knexfile.js in the root directory with the following content:
 
 ```js
-// knexfile.js
-module.exports = {
-	development: {
-		client: "mysql",
-		connection: {
-			host: process.env.DB_HOST,
-			user: process.env.DB_USER,
-			password: process.env.DB_PASSWORD,
-			database: process.env.DB_NAME,
-		},
-		migrations: {
-			tableName: "knex_migrations",
-		},
+import "dotenv/config";
+import knex from "knex";
+
+const db = knex({
+	client: "mysql2",
+	connection: {
+		host: process.env.DB_HOST,
+		database: process.env.DB_NAME,
+		user: process.env.DB_USER,
+		password: process.env.DB_PASSWORD,
+		charset: "utf8",
 	},
-	production: {
-		client: "mysql",
-		connection: {
-			host: process.env.DB_HOST,
-			user: process.env.DB_USER,
-			password: process.env.DB_PASSWORD,
-			database: process.env.DB_NAME,
-		},
-		migrations: {
-			tableName: "knex_migrations",
-		},
+	migrations: {
+		directory: "./migrations",
 	},
-};
+});
+
+export default db;
 ```
 
 3. Run Migrations: Ensure you have configured your knexfile.js correctly. Then run:

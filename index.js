@@ -33,7 +33,7 @@ app.use(
 	expressSession({
 		secret: process.env.SESSION_SECRET,
 		resave: false,
-		saveUninitialized: true,
+		saveUninitialized: false,
 		cookie: {
 			secure: process.env.NODE_ENV === "production",
 			sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
@@ -154,6 +154,11 @@ passport.deserializeUser((userId, done) => {
 app.use("/boardgames", boardgameRoutes);
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
+app.use((req, res, next) => {
+	console.log("Session ID:", req.sessionID);
+	console.log("Session Data:", req.session);
+	next();
+});
 
 const PORT = process.env.PORT || 8080;
 

@@ -12,8 +12,8 @@ router.get(
 	passport.authenticate("github", {
 		failureRedirect: `${process.env.CLIENT_URL}/auth-fail`,
 	}),
-	(_req, res) => {
-		res.redirect(process.env.CLIENT_URL + "/profile");
+	(req, res) => {
+		res.redirect(`${process.env.CLIENT_URL}/profile`);
 	}
 );
 
@@ -26,7 +26,7 @@ router.get(
 	}),
 	(req, res) => {
 		// Successful authentication
-		res.redirect(process.env.CLIENT_URL + "/profile");
+		res.redirect(`${process.env.CLIENT_URL}/profile`);
 	}
 );
 

@@ -1,9 +1,8 @@
 import express from "express";
 const router = express.Router();
-
 import passport from "passport";
-
 import dotenv from "dotenv";
+
 dotenv.config();
 
 // Github authentication routes
@@ -23,7 +22,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 router.get(
 	"/google/callback",
 	passport.authenticate("google", {
-		failureRedirect: `${process.env.CLIENT_URL}/login`,
+		failureRedirect: `${process.env.CLIENT_URL}/auth-fail`,
 	}),
 	(req, res) => {
 		// Successful authentication
@@ -35,7 +34,7 @@ router.get(
 router.get("/profile", (req, res) => {
 	// If `req.user` isn't found send back a 401 Unauthorized response
 	if (req.user === undefined)
-		return res.status(401).json({ message: "Unauthorized" });
+		return res.status(401).json({ message: "Unauthorized 😒" });
 
 	// If user is currently authenticated, send back user info
 	res.status(200).json(req.user);

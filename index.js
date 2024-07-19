@@ -7,6 +7,8 @@ import boardgameRoutes from "./routes/boardgames.js";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import helmet from "helmet";
+import pg from "pg";
+import connectPgSimple from "connect-pg-simple";
 
 // Passport library and Github
 import passport from "passport";
@@ -38,8 +40,21 @@ app.use(
 			secure: process.env.NODE_ENV === "production",
 			sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 		},
+		store: new PgSession({
+			pool: new pg.Pool({
+				connectionString: process.env.DATABASE_URL,
+				ssl: { rejectUnauthorized: false },
+			}),
+		}),
 	})
 );
+
+// Log session details
+app.use((req, res, next) => {
+	console.log("Session ID:", req.sessionID);
+	console.log("Session Data:", req.session);
+	next();
+});
 
 // =========== Passport Config ============
 
@@ -154,11 +169,6 @@ passport.deserializeUser((userId, done) => {
 app.use("/boardgames", boardgameRoutes);
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
-app.use((req, res, next) => {
-	console.log("Session ID:", req.sessionID);
-	console.log("Session Data:", req.session);
-	next();
-});
 
 const PORT = process.env.PORT || 8080;
 

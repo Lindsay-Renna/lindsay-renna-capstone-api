@@ -29,14 +29,16 @@ app.use(
 app.use(express.json());
 app.use(helmet());
 
+app.set("trust proxy", 1);
 app.use(
 	expressSession({
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
+		proxy: true,
 		cookie: {
-			secure: process.env.NODE_ENV === "production",
-			sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+			secure: "auto",
+			sameSite: "none",
 		},
 	})
 );

@@ -16,6 +16,7 @@ import passportGitHub from "passport-github2";
 import passportGoogle from "passport-google-oauth20";
 const GitHubStrategy = passportGitHub.Strategy;
 const GoogleStrategy = passportGoogle.Strategy;
+const PgSession = connectPgSimple(expressSession);
 
 import knex from "./knexfile.js";
 

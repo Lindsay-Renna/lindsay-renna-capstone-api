@@ -7,8 +7,6 @@ import boardgameRoutes from "./routes/boardgames.js";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import helmet from "helmet";
-import pg from "pg";
-import connectPgSimple from "connect-pg-simple";
 
 // Passport library and Github
 import passport from "passport";
@@ -16,7 +14,6 @@ import passportGitHub from "passport-github2";
 import passportGoogle from "passport-google-oauth20";
 const GitHubStrategy = passportGitHub.Strategy;
 const GoogleStrategy = passportGoogle.Strategy;
-const PgSession = connectPgSimple(expressSession);
 
 import knex from "./knexfile.js";
 
@@ -36,26 +33,13 @@ app.use(
 	expressSession({
 		secret: process.env.SESSION_SECRET,
 		resave: false,
-		saveUninitialized: false,
+		saveUninitialized: true,
 		cookie: {
 			secure: process.env.NODE_ENV === "production",
 			sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 		},
-		store: new PgSession({
-			pool: new pg.Pool({
-				connectionString: process.env.DATABASE_URL,
-				ssl: { rejectUnauthorized: false },
-			}),
-		}),
 	})
 );
-
-// Log session details
-app.use((req, res, next) => {
-	console.log("Session ID:", req.sessionID);
-	console.log("Session Data:", req.session);
-	next();
-});
 
 // =========== Passport Config ============
 

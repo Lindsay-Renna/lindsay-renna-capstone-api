@@ -35,9 +35,10 @@ app.use(
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
+		proxy: true,
 		cookie: {
 			secure: process.env.NODE_ENV === "production",
-			sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+			sameSite: "none",
 		},
 	})
 );

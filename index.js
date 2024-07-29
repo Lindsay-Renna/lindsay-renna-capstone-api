@@ -35,10 +35,10 @@ app.use(
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
-		proxy: true,
+		proxy: true, // this is optional it depend which server you host, i am not sure about Heroku if you need it or not
 		cookie: {
-			secure: process.env.NODE_ENV === "production",
-			sameSite: "none",
+			secure: "auto", // this will set to false on developement, but true on Heroku since is https so this setting is required
+			sameSite: "none", //by default in developement this is false if you're in developement mode
 		},
 	})
 );

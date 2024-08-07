@@ -21,9 +21,24 @@ export const up = function (knex) {
 				.inTable("users")
 				.onUpdate("CASCADE")
 				.onDelete("CASCADE");
+		})
+		.createTable("family_members", (table) => {
+			table.increments("id").primary();
+			table.integer("user_id").unsigned().notNullable();
+			table.string("name", 100).notNullable();
+			table.integer("age").notNullable();
+			table
+				.foreign("user_id")
+				.references("id")
+				.inTable("users")
+				.onDelete("CASCADE");
+			table.timestamp("updated_at").defaultTo(knex.fn.now());
 		});
 };
 
 export const down = function (knex) {
-	return knex.schema.dropTable("watched").dropTable("users");
+	return knex.schema
+		.dropTable("family_members")
+		.dropTable("watched")
+		.dropTable("users");
 };

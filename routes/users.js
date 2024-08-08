@@ -60,4 +60,98 @@ router.delete("/:movieId", async (req, res) => {
 	}
 });
 
+// Get all family members for a user
+router.get("/:userId/family", async (req, res) => {
+	try {
+		const { userId } = req.params;
+		const familyList = await knex("family_member")
+			.select("*")
+			.where({ user_id: userId });
+		res.status(200).json(familyList);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({
+			error_code: 500,
+			error_msg: "Failed to GET family members information.",
+		});
+	}
+});
+
+// Add a new family member
+router.post("/family/add", async (req, res) => {
+	const { user_id, name, age, gender } = req.body;
+
+	if (!user_id || !name || !age || !gender) {
+		return res.status(400).json({ error: "Missing required fields" });
+	}
+
+	try {
+		const [id] = await knex("family_member").insert({
+			user_id,
+			name,
+			age,
+			gender,
+			updated_at: new Date(),
+		});
+
+		res.status(201).json({ id, message: "Family member added" });
+	} catch (error) {
+		console.error("Error adding family member:", error);
+		res.status(500).json({ error: "Failed to add family member" });
+	}
+});
+
+// Edit a family member
+router.put("/family/:familyId", async (req, res) => {
+	const { familyId } = req.params;
+	const { name, age, gender } = req.body;
+
+	if (!familyId) {
+		return res.status(400).json({ error: "No such family member found" });
+	}
+
+	if (!name && !age && !gender) {
+		return res.status(400).json({ error: "No fields to update" });
+	}
+
+	try {
+		const updatedFields = {};
+		if (name) updatedFields.name = name;
+		if (age) updatedFields.age = age;
+		if (gender) updatedFields.gender = gender;
+		updatedFields.updated_at = new Date();
+
+		const result = await knex("family_member")
+			.update(updatedFields)
+			.where({ id: familyId });
+
+		if (result) {
+			res.status(200).json({ message: "Family member updated successfully" });
+		} else {
+			res.status(404).json({ error: "Family member not found" });
+		}
+	} catch (error) {
+		console.error("Error updating family member:", error);
+		res.status(500).json({ error: "Failed to update family member" });
+	}
+});
+
+// Delete a family member
+router.delete("/family/:familyId", async (req, res) => {
+	const { familyId } = req.params;
+
+	if (!familyId) {
+		return res.status(400).json({ error: "No family member found" });
+	}
+
+	try {
+		await knex("family_member").delete().where({ id: familyId });
+
+		res.status(204).json("Family member removed");
+	} catch (error) {
+		console.error("Error deleting family member:", error);
+		res.status(500).json({ error: "Failed to remove family member" });
+	}
+});
+
 export default router;

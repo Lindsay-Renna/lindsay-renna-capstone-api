@@ -22,7 +22,7 @@ export const up = function (knex) {
 				.onUpdate("CASCADE")
 				.onDelete("CASCADE");
 		})
-		.createTable("family_members", (table) => {
+		.createTable("family_member", (table) => {
 			table.increments("id").primary();
 			table.integer("user_id").unsigned().notNullable();
 			table.string("name", 100).notNullable();
@@ -38,7 +38,7 @@ export const up = function (knex) {
 
 export const down = function (knex) {
 	return knex.schema
-		.dropTable("family_members")
+		.dropTable("family_member")
 		.dropTable("watched")
 		.dropTable("users");
 };

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   width="19.99999"
+   height="19.99999"
+   viewBox="0 0 7.4999964 7.4999964"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="cursor-svgrepo-com.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="12.703125"
+     inkscape:cx="14.681427"
+     inkscape:cy="14.681427"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <g
+     id="SVGRepo_bgCarrier"
+     stroke-width="0"
+     transform="translate(-3.2491897,-3.2491899)" />
+  <g
+     id="SVGRepo_tracerCarrier"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     transform="translate(-3.2491897,-3.2491899)" />
+  <g
+     id="SVGRepo_iconCarrier"
+     transform="translate(-3.2491897,-3.2491899)">
+    <path
+       d="M 8.9597611,10.084929 7.2719869,8.3971553 6.7565651,8.9125771 C 6.2289295,9.4402127 5.9650944,9.7040307 5.6815331,9.6417621 5.3979719,9.5794501 5.26899,9.2293645 5.0110223,8.5291501 L 4.1506568,6.1939165 C 3.6360364,4.7970708 3.3787286,4.0986563 3.7386924,3.7386925 4.0986562,3.3787287 4.7970706,3.6360366 6.1939163,4.1506618 l 2.3352336,0.8603606 c 0.7002144,0.2579678 1.0503,0.3869496 1.112612,0.6705109 0.062268,0.2835612 -0.2015494,0.5473964 -0.729185,1.075032 L 8.3971551,7.2719871 10.084929,8.9597613 c 0.174764,0.1747215 0.262146,0.2621035 0.302517,0.3595997 0.05382,0.1299804 0.05382,0.2759885 0,0.4059689 -0.04037,0.097451 -0.127753,0.1848354 -0.302517,0.3595991 -0.1747638,0.174765 -0.2621459,0.262147 -0.3595994,0.302517 -0.1299804,0.05382 -0.2759884,0.05382 -0.4059688,0 -0.097496,-0.04037 -0.1848782,-0.127752 -0.3595997,-0.302517 z"
+       stroke="#000000"
+       stroke-width="0.64283"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path1"
+       style="fill:#ffffff;fill-opacity:1" />
+  </g>
+</svg>

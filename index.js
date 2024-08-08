@@ -7,6 +7,8 @@ import boardgameRoutes from "./routes/boardgames.js";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import helmet from "helmet";
+import path from "path"; // Import path module
+import { fileURLToPath } from "url";
 
 // Passport library and Github
 import passport from "passport";
@@ -19,6 +21,10 @@ import knex from "./knexfile.js";
 
 dotenv.config();
 
+// Define __dirname in ES module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 app.use(
 	cors({
@@ -27,7 +33,26 @@ app.use(
 	})
 );
 app.use(express.json());
-app.use(helmet());
+app.use(
+	helmet({
+		contentSecurityPolicy: {
+			directives: {
+				defaultSrc: ["'self'"],
+				scriptSrc: ["'self'"],
+				connectSrc: [
+					"'self'",
+					"https://api.themoviedb.org",
+					"https://api.rawg.io",
+				], // Allow connections to external APIs
+				imgSrc: ["'self'", "data:", "*"], // Allow images from any source
+				styleSrc: ["'self'", "'unsafe-inline'"],
+				fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
+				objectSrc: ["'none'"],
+				upgradeInsecureRequests: [],
+			},
+		},
+	})
+);
 
 app.set("trust proxy", 1);
 app.use(
@@ -156,9 +181,17 @@ app.use("/boardgames", boardgameRoutes);
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 
+// Serve static files from the 'client' directory
+app.use(express.static(path.join(__dirname, "client")));
+
+// Handle requests for the React app
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "client", "index.html"));
+});
+
 const PORT = process.env.PORT || 8080;
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
 	res.send("Welcome to the FamTivity API");
 });
 

@@ -43,6 +43,7 @@ app.use(
 					"'self'",
 					"https://api.themoviedb.org",
 					"https://api.rawg.io",
+					"https://famtivity.fun",
 				], // Allow connections to external APIs
 				imgSrc: ["'self'", "data:", "*"], // Allow images from any source
 				styleSrc: ["'self'", "'unsafe-inline'"],

@@ -79,9 +79,9 @@ router.get("/:userId/family", async (req, res) => {
 
 // Add a new family member
 router.post("/family/add", async (req, res) => {
-	const { user_id, name, age, gender } = req.body;
+	const { user_id, name, age, avatar } = req.body;
 
-	if (!user_id || !name || !age || !gender) {
+	if (!user_id || !name || !age || !avatar) {
 		return res.status(400).json({ error: "Missing required fields" });
 	}
 
@@ -90,7 +90,7 @@ router.post("/family/add", async (req, res) => {
 			user_id,
 			name,
 			age,
-			gender,
+			avatar,
 			updated_at: new Date(),
 		});
 
@@ -104,13 +104,13 @@ router.post("/family/add", async (req, res) => {
 // Edit a family member
 router.put("/family/:familyId", async (req, res) => {
 	const { familyId } = req.params;
-	const { name, age, gender } = req.body;
+	const { name, age, avatar } = req.body;
 
 	if (!familyId) {
 		return res.status(400).json({ error: "No such family member found" });
 	}
 
-	if (!name && !age && !gender) {
+	if (!name && !age && !avatar) {
 		return res.status(400).json({ error: "No fields to update" });
 	}
 
@@ -118,7 +118,7 @@ router.put("/family/:familyId", async (req, res) => {
 		const updatedFields = {};
 		if (name) updatedFields.name = name;
 		if (age) updatedFields.age = age;
-		if (gender) updatedFields.gender = gender;
+		if (avatar) updatedFields.avatar = avatar;
 		updatedFields.updated_at = new Date();
 
 		const result = await knex("family_member")

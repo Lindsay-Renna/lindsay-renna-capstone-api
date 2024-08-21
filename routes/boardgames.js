@@ -32,17 +32,29 @@ router.get("/", async (req, res) => {
 
 router.post("/results", async (req, res) => {
 	try {
-		const { num_players, min_age, max_time, category } = req.body;
-
-		const boardgames = await knex("bgg")
+		const { num_players, min_age, max_time, category, mechanics } = req.body;
+		const query = knex("bgg")
 			.select("*")
 			.where("min_players", "<=", num_players)
 			.andWhere("max_players", ">=", num_players)
 			.andWhere("min_time", "<=", max_time)
 			.andWhere("min_age", "<=", min_age)
-			.andWhere("year", ">", 2015)
-			.andWhere("category", "like", `%${category}%`)
-			.limit(100);
+			.andWhere("year", ">", 2015);
+
+		// Add conditional category filter
+		if (category && category.length > 0) {
+			query.andWhere("category", "like", `%${category}%`);
+		}
+
+		// Add conditional mechanics filter
+		if (mechanics === "Cooperative") {
+			query.andWhere("mechanics", "like", "%Cooperative%");
+		} else {
+			// If mechanics is empty, exclude "Cooperative" results
+			query.andWhere("mechanics", "not like", "%Cooperative%");
+		}
+
+		const boardgames = await query.limit(100);
 
 		boardgames.forEach((game) => {
 			const image = JSON.parse(unescape(game.image_urls));
